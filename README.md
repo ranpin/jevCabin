@@ -105,3 +105,8 @@ JEV_BACKEND=dryrun python jev_extract.py     # 只打印将发送的问题结构
 
 - 🏗 **[信息提取架构（Jev）](docs/architecture.md)**——类型化决策三原语、四步提取管线、与旧管线对比、四后端配置
 - 📊 **[评测结果与基准](docs/evaluation.md)**——51 条实测、510 条扩充集、对抗子集（诚实边界）、laya 怪癖与工程对策、复现命令与产物清单
+
+## 许可与致谢
+
+MIT——见 [`LICENSE`](LICENSE)。对话模型走 OpenAI 兼容 API（可指向本地边车服务）；信息提取用本地
+Jev/Laya 类型化决策模型（零 token 成本）。
