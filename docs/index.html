@@ -308,9 +308,6 @@
     <!-- ============ 方法 ============ -->
     <section class="ds-section" id="method">
       <h2 class="ds-h2">方法：类型化决策替代巨型 prompt</h2>
-      <p class="sec-note">旧管线把 2000-token 的抽取规则塞进 prompt 让 LLM 一次输出 JSON；
-        新管线改成一串<b>封闭选项的判别式问题</b>，由 laya 判别式作答（单次调用内并行答全部问题；管线按锚点→扫描→属性分多轮调用）。</p>
-      <p><b>输入输出</b>：输入一句车载口语中文（可含多人、否定句、品牌线索）；输出 JSON <code>{"persons": [{"name", "identity", "location", "company"}]}</code>——每个识别出的人物给出身份（15 选项封闭集）、座位（13 选项封闭集）与公司/品牌（v5 起，~90 词词典就近绑定、零模型调用）；证据不足的字段置空（防幻觉）。</p>
       <div class="ds-dgwrap">
         <svg class="ds-dg" viewBox="0 0 1040 370" role="img" aria-label="新旧管线对比泳道图：上泳道旧管线为车载口语句 → 2000-token 抽取规则 prompt → Qwen2.5-Omni-7B → JSON 一次输出 → p50 0.745s；下泳道新管线为车载口语句 → 规则候选生成 → 选择轮 forced choice → 属性轮 laya → 代码层门控 → JSON persons → p50 0.028s，快 27 倍">
           <defs>
@@ -496,6 +493,9 @@
         </div>
       </div>
       <p class="ds-figcap">图 1 · 旧管线（2000-token 巨型 prompt × Qwen2.5-Omni-7B 一次出 JSON）vs 新管线（规则候选 → laya 类型化决策 → 代码层门控），同机 p50 0.745s → 0.028s</p>
+      <p class="sec-note">旧管线把 2000-token 的抽取规则塞进 prompt 让 LLM 一次输出 JSON；
+        新管线改成一串<b>封闭选项的判别式问题</b>，由 laya 判别式作答（单次调用内并行答全部问题；管线按锚点→扫描→属性分多轮调用）。</p>
+      <p><b>输入输出</b>：输入一句车载口语中文（可含多人、否定句、品牌线索）；输出 JSON <code>{"persons": [{"name", "identity", "location", "company"}]}</code>——每个识别出的人物给出身份（15 选项封闭集）、座位（13 选项封闭集）与公司/品牌（v5 起，~90 词词典就近绑定、零模型调用）；证据不足的字段置空（防幻觉）。</p>
       <div class="cols">
         <div class="card">
           <h3>管线</h3>
