@@ -317,72 +317,183 @@
             <marker id="jev-dg-arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
               <polygon points="0 0, 9 3.5, 0 7" fill="var(--ds-faint)"/>
             </marker>
+            <!-- 视觉层·渐变立体盒：两 stop 属性值均为纯色回退，外壳 CSS 把末 stop 升级为 color-mix 加深（随主题翻转） -->
+            <linearGradient id="jev-g-accent" class="dg-grad" data-c="accent" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--ds-accent-soft)"/>
+              <stop offset="1" stop-color="var(--ds-accent-soft)"/>
+            </linearGradient>
+            <linearGradient id="jev-g-danger" class="dg-grad" data-c="danger" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--ds-danger-soft)"/>
+              <stop offset="1" stop-color="var(--ds-danger-soft)"/>
+            </linearGradient>
+            <linearGradient id="jev-g-alt" class="dg-grad" data-c="alt" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--ds-alt-soft)"/>
+              <stop offset="1" stop-color="var(--ds-alt-soft)"/>
+            </linearGradient>
+            <linearGradient id="jev-g-warn" class="dg-grad" data-c="warn" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--ds-warn-soft)"/>
+              <stop offset="1" stop-color="var(--ds-warn-soft)"/>
+            </linearGradient>
+            <linearGradient id="jev-g-ok" class="dg-grad" data-c="ok" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--ds-ok-soft)"/>
+              <stop offset="1" stop-color="var(--ds-ok-soft)"/>
+            </linearGradient>
+            <linearGradient id="jev-g-neutral" class="dg-grad" data-c="neutral" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--ds-code-bg)"/>
+              <stop offset="1" stop-color="var(--ds-code-bg)"/>
+            </linearGradient>
+            <!-- 图标 symbol：复制自 demo-page-iteration skill assets/dg-icons.svg（外部 use 引用 Chrome/Safari 静默失败，必须内联） -->
+            <symbol id="ico-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+            <symbol id="ico-text" viewBox="0 0 24 24"><path d="M5 5h14M5 10h14M5 15h9M5 20h5"/></symbol>
+            <symbol id="ico-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></symbol>
+            <symbol id="ico-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M10 12h4M10 16h4"/></symbol>
+            <symbol id="ico-branch" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+            <symbol id="ico-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5"/></symbol>
+            <symbol id="ico-sliders" viewBox="0 0 24 24"><path d="M4 8h8M18 8h2M4 16h4M12 16h8"/><circle cx="14" cy="8" r="2"/><circle cx="10" cy="16" r="2"/></symbol>
+            <symbol id="ico-funnel" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></symbol>
           </defs>
 
-          <!-- 层序：泳道边界 → 连线 → 盒子 → 文字 -->
+          <!-- 泳道边界（背景，常驻） -->
           <rect class="dg-region" x="20" y="20" width="1000" height="120" rx="10"/>
           <rect class="dg-region" x="20" y="156" width="1000" height="168" rx="10"/>
 
-          <!-- 连线：旧管线 -->
-          <line class="dg-edge" x1="125" y1="92" x2="153" y2="92" marker-end="url(#jev-dg-arr)"/>
-          <line class="dg-edge" x1="355" y1="92" x2="383" y2="92" marker-end="url(#jev-dg-arr)"/>
-          <line class="dg-edge" x1="525" y1="92" x2="553" y2="92" marker-end="url(#jev-dg-arr)"/>
-          <line class="dg-edge" x1="665" y1="92" x2="693" y2="92" marker-end="url(#jev-dg-arr)"/>
-          <!-- 连线：新管线（末盒 → 下方胶囊） -->
-          <line class="dg-edge" x1="125" y1="232" x2="153" y2="232" marker-end="url(#jev-dg-arr)"/>
-          <line class="dg-edge" x1="273" y1="232" x2="301" y2="232" marker-end="url(#jev-dg-arr)"/>
-          <line class="dg-edge" x1="471" y1="232" x2="499" y2="232" marker-end="url(#jev-dg-arr)"/>
-          <line class="dg-edge" x1="627" y1="232" x2="655" y2="232" marker-end="url(#jev-dg-arr)"/>
-          <line class="dg-edge" x1="835" y1="232" x2="863" y2="232" marker-end="url(#jev-dg-arr)"/>
-          <line class="dg-edge" x1="931" y1="264" x2="931" y2="275" marker-end="url(#jev-dg-arr)"/>
+          <!-- 连线（data-from/to 供悬停聚焦-上下文；层序：连线 → 脉冲环 → 数据包 → 节点组） -->
+          <line class="dg-edge" data-from="jev-o-in" data-to="jev-o-prompt" x1="125" y1="92" x2="153" y2="92" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-o-prompt" data-to="jev-o-model" x1="355" y1="92" x2="383" y2="92" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-o-model" data-to="jev-o-json" x1="525" y1="92" x2="553" y2="92" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-o-json" data-to="jev-o-time" x1="665" y1="92" x2="693" y2="92" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-n-in" data-to="jev-n-cand" x1="125" y1="232" x2="153" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-n-cand" data-to="jev-n-pick" x1="273" y1="232" x2="301" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-n-pick" data-to="jev-n-attr" x1="471" y1="232" x2="499" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-n-attr" data-to="jev-n-gate" x1="627" y1="232" x2="655" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-n-gate" data-to="jev-n-json" x1="835" y1="232" x2="863" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" data-from="jev-n-json" data-to="jev-n-time" x1="931" y1="264" x2="931" y2="275" marker-end="url(#jev-dg-arr)"/>
 
-          <!-- 盒子：旧管线 -->
-          <rect x="34" y="64" width="90" height="56" rx="8" fill="var(--ds-code-bg)" stroke="var(--ds-faint)" stroke-width="1.4"/>
-          <rect x="154" y="64" width="200" height="56" rx="8" fill="var(--ds-danger-soft)" stroke="var(--ds-danger)" stroke-width="1.4"/>
-          <rect x="384" y="64" width="140" height="56" rx="8" fill="var(--ds-code-bg)" stroke="var(--ds-faint)" stroke-width="1.4"/>
-          <rect x="554" y="64" width="110" height="56" rx="8" fill="var(--ds-code-bg)" stroke="var(--ds-faint)" stroke-width="1.4"/>
-          <rect x="694" y="77" width="88" height="30" rx="15" fill="var(--ds-code-bg)" stroke="var(--ds-faint)"/>
-          <!-- 盒子：新管线 -->
-          <rect x="34" y="200" width="90" height="64" rx="8" fill="var(--ds-accent-soft)" stroke="var(--ds-accent)" stroke-width="1.4"/>
-          <rect x="154" y="200" width="118" height="64" rx="8" fill="var(--ds-code-bg)" stroke="var(--ds-faint)" stroke-width="1.4"/>
-          <rect x="302" y="200" width="168" height="64" rx="8" fill="var(--ds-alt-soft)" stroke="var(--ds-alt)" stroke-width="1.4"/>
-          <rect x="500" y="200" width="126" height="64" rx="8" fill="var(--ds-alt-soft)" stroke="var(--ds-alt)" stroke-width="1.4"/>
-          <rect x="656" y="200" width="178" height="64" rx="8" fill="var(--ds-warn-soft)" stroke="var(--ds-warn)" stroke-width="1.4"/>
-          <rect x="864" y="200" width="134" height="64" rx="8" fill="var(--ds-ok-soft)" stroke="var(--ds-ok)" stroke-width="1.4"/>
-          <rect x="863" y="276" width="136" height="28" rx="14" fill="var(--ds-ok-soft)" stroke="var(--ds-ok)"/>
-          <!-- 道标签底 -->
+          <!-- 脉冲环：数据包到达时亮起（与各自包同 6s 周期同 begin，keyTimes 按到达分数开槽）。
+               旧道包匀速走完全程，各节点 a=（中心−79）/659；新道包 0.226s 冲刺，到达被压进周期前 4%，
+               中段节点开槽会互相重叠/越界，故新道只保留首/末两环。 -->
+          <rect class="dg-ring" x="31" y="61" width="96" height="62" rx="11" stroke="var(--ds-accent)" opacity="0">
+            <animate attributeName="opacity" values="0;.85;0;0" keyTimes="0;.05;.2;1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </rect>
+          <rect class="dg-ring" x="151" y="61" width="206" height="62" rx="11" stroke="var(--ds-danger)" opacity="0">
+            <animate attributeName="opacity" values="0;0;.85;0;0" keyTimes="0;.256;.306;.456;1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </rect>
+          <rect class="dg-ring" x="381" y="61" width="146" height="62" rx="11" stroke="var(--ds-alt)" opacity="0">
+            <animate attributeName="opacity" values="0;0;.85;0;0" keyTimes="0;.559;.609;.759;1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </rect>
+          <rect class="dg-ring" x="551" y="61" width="116" height="62" rx="11" stroke="var(--ds-ok)" opacity="0">
+            <animate attributeName="opacity" values="0;0;.85;0;0" keyTimes="0;.794;.844;.994;1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </rect>
+          <rect class="dg-ring" x="691" y="74" width="94" height="36" rx="18" stroke="var(--ds-faint)" opacity="0">
+            <animate attributeName="opacity" values="0;0;.85;0" keyTimes="0;.93;.96;1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </rect>
+          <rect class="dg-ring" x="31" y="197" width="96" height="70" rx="11" stroke="var(--ds-accent)" opacity="0">
+            <animate attributeName="opacity" values="0;.85;0;0" keyTimes="0;.05;.2;1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </rect>
+          <rect class="dg-ring" x="861" y="197" width="140" height="70" rx="11" stroke="var(--ds-ok)" opacity="0">
+            <animate attributeName="opacity" values="0;.85;0;0" keyTimes="0;.04;.12;1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </rect>
+
+          <!-- 数据包：旧道单包 6s 匀速全程（主链持续运动，画在盒下层、盒间空隙可见）；
+               新道包同 6s 周期，keyPoints 0→1 在 0.226s（=6×.0377）内冲刺完便停靠终点，opacity 门只在运动+短停可见 -->
+          <g transform="translate(79,92)"><g class="dg-packet-g" opacity="0">
+            <circle r="8" fill="var(--ds-danger)" opacity=".22"/>
+            <circle r="3.2" fill="var(--ds-danger)"/>
+            <animateMotion dur="6s" begin="indefinite" repeatCount="indefinite" calcMode="linear" path="M0,0 H659"/>
+            <animate attributeName="opacity" from="1" to="1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </g></g>
+          <g transform="translate(79,232)"><g class="dg-packet-g" opacity="0">
+            <circle r="8" fill="var(--ds-ok)" opacity=".22"/>
+            <circle r="3.2" fill="var(--ds-ok)"/>
+            <animateMotion dur="6s" begin="indefinite" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;.0377;1" path="M0,0 H852"/>
+            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.02;.1;.15;1" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+          </g></g>
+
+          <!-- 节点组：g.dg-node（data-id 供悬停聚焦、--dg-i 入场序号、--dg-glow 悬停光效色）；旧道 → 新道依次入场 -->
+          <g class="dg-node" data-id="jev-o-in" style="--dg-glow:var(--ds-accent);--dg-i:0">
+            <rect x="34" y="64" width="90" height="56" rx="8" fill="url(#jev-g-accent)" stroke="var(--ds-accent)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-chat" x="43" y="70" width="14" height="14" style="color:var(--ds-accent)"/>
+            <text class="dg-name" x="79" y="96" text-anchor="middle">车载口语句</text>
+          </g>
+          <g class="dg-node" data-id="jev-o-prompt" style="--dg-glow:var(--ds-danger);--dg-i:1">
+            <rect x="154" y="64" width="200" height="56" rx="8" fill="url(#jev-g-danger)" stroke="var(--ds-danger)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-text" x="154" y="70" width="14" height="14" style="color:var(--ds-danger)"/>
+            <text class="dg-name" x="254" y="88" text-anchor="middle">2000-token 抽取规则 prompt</text>
+            <text class="dg-sub" x="254" y="102" text-anchor="middle">巨型 prompt</text>
+          </g>
+          <g class="dg-node" data-id="jev-o-model" style="--dg-glow:var(--ds-alt);--dg-i:2">
+            <rect x="384" y="64" width="140" height="56" rx="8" fill="url(#jev-g-alt)" stroke="var(--ds-alt)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-chip" x="393" y="70" width="14" height="14" style="color:var(--ds-alt)"/>
+            <text class="dg-name" x="454" y="96" text-anchor="middle">Qwen2.5-Omni-7B</text>
+          </g>
+          <g class="dg-node" data-id="jev-o-json" style="--dg-glow:var(--ds-ok);--dg-i:3">
+            <rect x="554" y="64" width="110" height="56" rx="8" fill="url(#jev-g-ok)" stroke="var(--ds-ok)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-file" x="563" y="70" width="14" height="14" style="color:var(--ds-ok)"/>
+            <text class="dg-name" x="609" y="96" text-anchor="middle">JSON 一次输出</text>
+          </g>
+          <g class="dg-node" data-id="jev-o-time" style="--dg-glow:var(--ds-muted);--dg-i:4">
+            <rect x="694" y="77" width="88" height="30" rx="15" fill="url(#jev-g-neutral)" stroke="var(--ds-faint)"/>
+            <text class="dg-tag" x="738" y="96" text-anchor="middle" fill="var(--ds-muted)">p50 0.745s</text>
+          </g>
+          <g class="dg-node" data-id="jev-n-in" style="--dg-glow:var(--ds-accent);--dg-i:5">
+            <rect x="34" y="200" width="90" height="64" rx="8" fill="url(#jev-g-accent)" stroke="var(--ds-accent)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-chat" x="43" y="202" width="14" height="14" style="color:var(--ds-accent)"/>
+            <text class="dg-name" x="79" y="236" text-anchor="middle">车载口语句</text>
+          </g>
+          <g class="dg-node" data-id="jev-n-cand" style="--dg-glow:var(--ds-muted);--dg-i:6">
+            <rect x="154" y="200" width="118" height="64" rx="8" fill="url(#jev-g-neutral)" stroke="var(--ds-faint)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-branch" x="163" y="202" width="14" height="14" style="color:var(--ds-muted)"/>
+            <text class="dg-name" x="213" y="220" text-anchor="middle">规则候选生成</text>
+            <text class="dg-sub" x="213" y="234" text-anchor="middle">CJK 称谓 · 生僻姓</text>
+            <text class="dg-sub" x="213" y="248" text-anchor="middle">锚点（零模型）</text>
+          </g>
+          <g class="dg-node" data-id="jev-n-pick" style="--dg-glow:var(--ds-alt);--dg-i:7">
+            <rect x="302" y="200" width="168" height="64" rx="8" fill="url(#jev-g-alt)" stroke="var(--ds-alt)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-radio" x="311" y="202" width="14" height="14" style="color:var(--ds-alt)"/>
+            <text class="dg-name" x="386" y="228" text-anchor="middle">选择轮 · forced choice</text>
+            <text class="dg-sub" x="386" y="242" text-anchor="middle">全候选同一 softmax 竞争</text>
+          </g>
+          <g class="dg-node" data-id="jev-n-attr" style="--dg-glow:var(--ds-alt);--dg-i:8">
+            <rect x="500" y="200" width="126" height="64" rx="8" fill="url(#jev-g-alt)" stroke="var(--ds-alt)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-sliders" x="509" y="202" width="14" height="14" style="color:var(--ds-alt)"/>
+            <text class="dg-name" x="563" y="220" text-anchor="middle">属性轮 · laya</text>
+            <text class="dg-sub" x="563" y="234" text-anchor="middle">location 13 选项</text>
+            <text class="dg-sub" x="563" y="248" text-anchor="middle">identity 15 选项</text>
+          </g>
+          <g class="dg-node" data-id="jev-n-gate" style="--dg-glow:var(--ds-warn);--dg-i:9">
+            <rect x="656" y="200" width="178" height="64" rx="8" fill="url(#jev-g-warn)" stroke="var(--ds-warn)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-funnel" x="665" y="202" width="14" height="14" style="color:var(--ds-warn)"/>
+            <text class="dg-name" x="745" y="220" text-anchor="middle">代码层门控</text>
+            <text class="dg-sub" x="745" y="234" text-anchor="middle">否定剔除 · 证据校验 · 后缀拆分</text>
+            <text class="dg-sub" x="745" y="248" text-anchor="middle">线索锚点 · 文本绑定 · 品牌就近</text>
+          </g>
+          <g class="dg-node" data-id="jev-n-json" style="--dg-glow:var(--ds-ok);--dg-i:10">
+            <rect x="864" y="200" width="134" height="64" rx="8" fill="url(#jev-g-ok)" stroke="var(--ds-ok)" stroke-width="1.4"/>
+            <use class="dg-ico" href="#ico-file" x="873" y="202" width="14" height="14" style="color:var(--ds-ok)"/>
+            <text class="dg-name" x="931" y="228" text-anchor="middle">JSON persons[…]</text>
+            <text class="dg-sub" x="931" y="242" text-anchor="middle">证据不足置空 · 防幻觉</text>
+          </g>
+          <g class="dg-node" data-id="jev-n-time" style="--dg-glow:var(--ds-ok);--dg-i:11">
+            <rect x="863" y="276" width="136" height="28" rx="14" fill="url(#jev-g-ok)" stroke="var(--ds-ok)"/>
+            <text class="dg-tag" x="931" y="294" text-anchor="middle" fill="var(--ds-ok)">p50 0.028s · 快 27×</text>
+          </g>
+
+          <!-- 道标签底 + 脚注 + 口径注记（常驻） -->
           <rect x="34" y="32" width="120" height="24" rx="12" fill="var(--ds-code-bg)" stroke="var(--ds-faint)"/>
           <rect x="34" y="168" width="176" height="24" rx="12" fill="var(--ds-accent-soft)" stroke="var(--ds-accent-ring)"/>
-
-          <!-- 文字：道标签 -->
           <text class="dg-tag" x="94" y="48" text-anchor="middle" fill="var(--ds-muted)">旧管线 · LLM 生成</text>
           <text class="dg-tag" x="122" y="184" text-anchor="middle" fill="var(--ds-accent-strong)">新管线 · 类型化决策（v5）</text>
-          <!-- 文字：旧管线 -->
-          <text class="dg-name" x="79" y="96" text-anchor="middle">车载口语句</text>
-          <text class="dg-name" x="254" y="88" text-anchor="middle">2000-token 抽取规则 prompt</text>
-          <text class="dg-sub" x="254" y="102" text-anchor="middle">巨型 prompt</text>
-          <text class="dg-name" x="454" y="96" text-anchor="middle">Qwen2.5-Omni-7B</text>
-          <text class="dg-name" x="609" y="96" text-anchor="middle">JSON 一次输出</text>
-          <text class="dg-tag" x="738" y="96" text-anchor="middle" fill="var(--ds-muted)">p50 0.745s</text>
-          <!-- 文字：新管线 -->
-          <text class="dg-name" x="79" y="236" text-anchor="middle">车载口语句</text>
-          <text class="dg-name" x="213" y="220" text-anchor="middle">规则候选生成</text>
-          <text class="dg-sub" x="213" y="234" text-anchor="middle">CJK 称谓 · 生僻姓</text>
-          <text class="dg-sub" x="213" y="248" text-anchor="middle">锚点（零模型）</text>
-          <text class="dg-name" x="386" y="228" text-anchor="middle">选择轮 · forced choice</text>
-          <text class="dg-sub" x="386" y="242" text-anchor="middle">全候选同一 softmax 竞争</text>
-          <text class="dg-name" x="563" y="220" text-anchor="middle">属性轮 · laya</text>
-          <text class="dg-sub" x="563" y="234" text-anchor="middle">location 13 选项</text>
-          <text class="dg-sub" x="563" y="248" text-anchor="middle">identity 15 选项</text>
-          <text class="dg-name" x="745" y="220" text-anchor="middle">代码层门控</text>
-          <text class="dg-sub" x="745" y="234" text-anchor="middle">否定剔除 · 证据校验 · 后缀拆分</text>
-          <text class="dg-sub" x="745" y="248" text-anchor="middle">线索锚点 · 文本绑定 · 品牌就近</text>
-          <text class="dg-name" x="931" y="228" text-anchor="middle">JSON persons[…]</text>
-          <text class="dg-sub" x="931" y="242" text-anchor="middle">证据不足置空 · 防幻觉</text>
-          <text class="dg-tag" x="931" y="294" text-anchor="middle" fill="var(--ds-ok)">p50 0.028s · 快 27×</text>
-          <!-- 脚注 -->
           <text class="dg-note" x="520" y="346" text-anchor="middle">判别式模型 = laya-multilingual（mmBERT-base 322M）· 纯本地前向 · 单次调用并行答全部问题</text>
+          <text class="dg-note" x="520" y="362" text-anchor="middle">动画时长按 p50 实测比例（0.745s : 0.028s ≈ 27×）</text>
         </svg>
+        <div class="dg-legend">
+          <span style="--c:var(--ds-accent)"><i></i>输入 / 数据</span>
+          <span style="--c:var(--ds-danger)"><i></i>问题（巨型 prompt）</span>
+          <span style="--c:var(--ds-alt)"><i></i>模型推理</span>
+          <span style="--c:var(--ds-warn)"><i></i>代码层门控</span>
+          <span style="--c:var(--ds-ok)"><i></i>输出结果</span>
+          <span style="--c:var(--ds-faint)"><i></i>通用 / 零模型</span>
+        </div>
       </div>
       <p class="ds-figcap">图 1 · 旧管线（2000-token 巨型 prompt × Qwen2.5-Omni-7B 一次出 JSON）vs 新管线（规则候选 → laya 类型化决策 → 代码层门控），同机 p50 0.745s → 0.028s</p>
       <div class="cols">
