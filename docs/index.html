@@ -84,7 +84,7 @@
   .tcand{display:inline-block;background:var(--ds-panel);border:1px solid var(--ds-border);
     border-radius:6px;padding:0 8px;margin:1px 2px;font-size:12px;color:var(--ds-text)}
   .tnum{font-variant-numeric:tabular-nums;color:var(--ds-accent-strong);font-weight:600}
-  .demo-note{margin-top:20px;font-size:12.5px;line-height:1.65}
+  .demo-note{margin-top:20px;font-size:12.5px;line-height:1.65;color:var(--ds-muted)}
 
   /* ---- 推理模式二选一（选项列表） ---- */
   .mode-switch{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
@@ -117,14 +117,8 @@
     border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
   .live-input-row button:disabled{opacity:.55;cursor:wait}
 
-  /* ---- 表格 ---- */
-  .tbl-wrap{overflow-x:auto;border:1px solid var(--ds-border);border-radius:10px;background:var(--ds-panel)}
-  table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
-  th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--ds-border)}
-  th{background:var(--ds-code-bg);color:var(--ds-muted);font-weight:600;font-size:12.5px;white-space:nowrap}
-  tr:last-child td{border-bottom:none}
-  td.num,th.num{font-variant-numeric:tabular-nums;text-align:right}
-  caption{caption-side:top;text-align:left;padding:9px 13px;color:var(--ds-muted);font-size:12.5px}
+  /* ---- 表格（标准三线表：边框/底色/圆角由外壳 .ds-table/.ds-tablewrap 提供） ---- */
+  .ds-table .num{text-align:right;font-variant-numeric:tabular-nums}
 
   ul.tight{margin:8px 0 0;padding-left:20px}
   ul.tight li{margin:5px 0}
@@ -257,8 +251,8 @@
       <p class="sec-note">测试数据集：自建车载中文信息抽取测试集（无公开基准）——51 条人工标注（真实车载口语风格，覆盖人物/身份/座位/公司四类）、510 条构造扩充集（10 个模板族，seed=42 构造即标注）与对抗子集；下方两表分别在 510 扩充集与同机 51 条上报告。</p>
       <p class="sec-note">全部数字可用仓库内 <code>scripts/compare_results.py</code> 对 gold 集离线复算。</p>
 
-      <div class="tbl-wrap">
-        <table>
+      <div class="ds-tablewrap">
+        <table class="ds-table">
           <caption>表 1 · 扩充集 510 条（10 个模板族，seed=42 构造即标注；laya v1/v3/v4/v5 为同一模型 laya-multilingual，仅管线规则版本不同）</caption>
           <thead><tr>
             <th>指标</th><th class="num">laya v1</th><th class="num">laya v3</th>
@@ -284,8 +278,8 @@
         </table>
       </div>
 
-      <div class="tbl-wrap" style="margin-top:18px">
-        <table>
+      <div class="ds-tablewrap" style="margin-top:18px">
+        <table class="ds-table">
           <caption>表 2 · 三种技术路线的性能对比（同机 51 条，Apple M4 Pro；原始数据 <code>test/results/原始51_*_性能.json</code>，510 条交叉验证与口径见 <code>evaluation.md</code>）</caption>
           <thead><tr><th>指标</th><th class="num">旧管线 Qwen2.5-Omni-7B<br>（LLM 生成，边车→平台）</th>
             <th class="num">open-jev<br>（DeBERTa-v3-large，仅英文）</th><th class="num">laya-multilingual v5<br>（mmBERT-base 322M）</th></tr></thead>
@@ -317,6 +311,80 @@
       <p class="sec-note">旧管线把 2000-token 的抽取规则塞进 prompt 让 LLM 一次输出 JSON；
         新管线改成一串<b>封闭选项的判别式问题</b>，由 laya 判别式作答（单次调用内并行答全部问题；管线按锚点→扫描→属性分多轮调用）。</p>
       <p><b>输入输出</b>：输入一句车载口语中文（可含多人、否定句、品牌线索）；输出 JSON <code>{"persons": [{"name", "identity", "location", "company"}]}</code>——每个识别出的人物给出身份（15 选项封闭集）、座位（13 选项封闭集）与公司/品牌（v5 起，~90 词词典就近绑定、零模型调用）；证据不足的字段置空（防幻觉）。</p>
+      <div class="ds-dgwrap">
+        <svg class="ds-dg" viewBox="0 0 1040 370" role="img" aria-label="新旧管线对比泳道图：上泳道旧管线为车载口语句 → 2000-token 抽取规则 prompt → Qwen2.5-Omni-7B → JSON 一次输出 → p50 0.745s；下泳道新管线为车载口语句 → 规则候选生成 → 选择轮 forced choice → 属性轮 laya → 代码层门控 → JSON persons → p50 0.028s，快 27 倍">
+          <defs>
+            <marker id="jev-dg-arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+              <polygon points="0 0, 9 3.5, 0 7" fill="var(--ds-faint)"/>
+            </marker>
+          </defs>
+
+          <!-- 层序：泳道边界 → 连线 → 盒子 → 文字 -->
+          <rect class="dg-region" x="20" y="20" width="1000" height="120" rx="10"/>
+          <rect class="dg-region" x="20" y="156" width="1000" height="168" rx="10"/>
+
+          <!-- 连线：旧管线 -->
+          <line class="dg-edge" x1="125" y1="92" x2="153" y2="92" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" x1="355" y1="92" x2="383" y2="92" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" x1="525" y1="92" x2="553" y2="92" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" x1="665" y1="92" x2="693" y2="92" marker-end="url(#jev-dg-arr)"/>
+          <!-- 连线：新管线（末盒 → 下方胶囊） -->
+          <line class="dg-edge" x1="125" y1="232" x2="153" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" x1="273" y1="232" x2="301" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" x1="471" y1="232" x2="499" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" x1="627" y1="232" x2="655" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" x1="835" y1="232" x2="863" y2="232" marker-end="url(#jev-dg-arr)"/>
+          <line class="dg-edge" x1="931" y1="264" x2="931" y2="275" marker-end="url(#jev-dg-arr)"/>
+
+          <!-- 盒子：旧管线 -->
+          <rect x="34" y="64" width="90" height="56" rx="8" fill="var(--ds-code-bg)" stroke="var(--ds-faint)" stroke-width="1.4"/>
+          <rect x="154" y="64" width="200" height="56" rx="8" fill="var(--ds-danger-soft)" stroke="var(--ds-danger)" stroke-width="1.4"/>
+          <rect x="384" y="64" width="140" height="56" rx="8" fill="var(--ds-code-bg)" stroke="var(--ds-faint)" stroke-width="1.4"/>
+          <rect x="554" y="64" width="110" height="56" rx="8" fill="var(--ds-code-bg)" stroke="var(--ds-faint)" stroke-width="1.4"/>
+          <rect x="694" y="77" width="88" height="30" rx="15" fill="var(--ds-code-bg)" stroke="var(--ds-faint)"/>
+          <!-- 盒子：新管线 -->
+          <rect x="34" y="200" width="90" height="64" rx="8" fill="var(--ds-accent-soft)" stroke="var(--ds-accent)" stroke-width="1.4"/>
+          <rect x="154" y="200" width="118" height="64" rx="8" fill="var(--ds-code-bg)" stroke="var(--ds-faint)" stroke-width="1.4"/>
+          <rect x="302" y="200" width="168" height="64" rx="8" fill="var(--ds-alt-soft)" stroke="var(--ds-alt)" stroke-width="1.4"/>
+          <rect x="500" y="200" width="126" height="64" rx="8" fill="var(--ds-alt-soft)" stroke="var(--ds-alt)" stroke-width="1.4"/>
+          <rect x="656" y="200" width="178" height="64" rx="8" fill="var(--ds-warn-soft)" stroke="var(--ds-warn)" stroke-width="1.4"/>
+          <rect x="864" y="200" width="134" height="64" rx="8" fill="var(--ds-ok-soft)" stroke="var(--ds-ok)" stroke-width="1.4"/>
+          <rect x="863" y="276" width="136" height="28" rx="14" fill="var(--ds-ok-soft)" stroke="var(--ds-ok)"/>
+          <!-- 道标签底 -->
+          <rect x="34" y="32" width="120" height="24" rx="12" fill="var(--ds-code-bg)" stroke="var(--ds-faint)"/>
+          <rect x="34" y="168" width="176" height="24" rx="12" fill="var(--ds-accent-soft)" stroke="var(--ds-accent-ring)"/>
+
+          <!-- 文字：道标签 -->
+          <text class="dg-tag" x="94" y="48" text-anchor="middle" fill="var(--ds-muted)">旧管线 · LLM 生成</text>
+          <text class="dg-tag" x="122" y="184" text-anchor="middle" fill="var(--ds-accent-strong)">新管线 · 类型化决策（v5）</text>
+          <!-- 文字：旧管线 -->
+          <text class="dg-name" x="79" y="96" text-anchor="middle">车载口语句</text>
+          <text class="dg-name" x="254" y="88" text-anchor="middle">2000-token 抽取规则 prompt</text>
+          <text class="dg-sub" x="254" y="102" text-anchor="middle">巨型 prompt</text>
+          <text class="dg-name" x="454" y="96" text-anchor="middle">Qwen2.5-Omni-7B</text>
+          <text class="dg-name" x="609" y="96" text-anchor="middle">JSON 一次输出</text>
+          <text class="dg-tag" x="738" y="96" text-anchor="middle" fill="var(--ds-muted)">p50 0.745s</text>
+          <!-- 文字：新管线 -->
+          <text class="dg-name" x="79" y="236" text-anchor="middle">车载口语句</text>
+          <text class="dg-name" x="213" y="220" text-anchor="middle">规则候选生成</text>
+          <text class="dg-sub" x="213" y="234" text-anchor="middle">CJK 称谓 · 生僻姓</text>
+          <text class="dg-sub" x="213" y="248" text-anchor="middle">锚点（零模型）</text>
+          <text class="dg-name" x="386" y="228" text-anchor="middle">选择轮 · forced choice</text>
+          <text class="dg-sub" x="386" y="242" text-anchor="middle">全候选同一 softmax 竞争</text>
+          <text class="dg-name" x="563" y="220" text-anchor="middle">属性轮 · laya</text>
+          <text class="dg-sub" x="563" y="234" text-anchor="middle">location 13 选项</text>
+          <text class="dg-sub" x="563" y="248" text-anchor="middle">identity 15 选项</text>
+          <text class="dg-name" x="745" y="220" text-anchor="middle">代码层门控</text>
+          <text class="dg-sub" x="745" y="234" text-anchor="middle">否定剔除 · 证据校验 · 后缀拆分</text>
+          <text class="dg-sub" x="745" y="248" text-anchor="middle">线索锚点 · 文本绑定 · 品牌就近</text>
+          <text class="dg-name" x="931" y="228" text-anchor="middle">JSON persons[…]</text>
+          <text class="dg-sub" x="931" y="242" text-anchor="middle">证据不足置空 · 防幻觉</text>
+          <text class="dg-tag" x="931" y="294" text-anchor="middle" fill="var(--ds-ok)">p50 0.028s · 快 27×</text>
+          <!-- 脚注 -->
+          <text class="dg-note" x="520" y="346" text-anchor="middle">判别式模型 = laya-multilingual（mmBERT-base 322M）· 纯本地前向 · 单次调用并行答全部问题</text>
+        </svg>
+      </div>
+      <p class="ds-figcap">图 1 · 旧管线（2000-token 巨型 prompt × Qwen2.5-Omni-7B 一次出 JSON）vs 新管线（规则候选 → laya 类型化决策 → 代码层门控），同机 p50 0.745s → 0.028s</p>
       <div class="cols">
         <div class="card">
           <h3>管线</h3>
